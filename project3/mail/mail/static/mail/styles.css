@@ -1,0 +1,31 @@
+textarea {
+    min-height: 400px;
+}
+
+.email_read {
+    background-color: lightgrey;
+    border-style: solid;
+    border-width: 1px;
+    padding: 5px 5px 5px 5px;
+}
+
+.email_unread {
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    padding: 5px 5px 5px 5px;
+}
+
+.flex-container {
+    display: flex;
+    align-content: space-between;   
+}
+
+.left-div{
+    align-self: flex-start;
+    margin-right: 16px;
+}
+
+.right-div{
+    margin-left: auto;
+}

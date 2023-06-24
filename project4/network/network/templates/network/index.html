@@ -1,0 +1,27 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+
+<form action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    Note: currently new post form is visible for all menu items. need to restrict it to All Posts'
+    Submitting posts currently saves it to the database but not much more.
+
+    <div class="form-group">
+        <label for="post_content">New Post</label>
+        <textarea autofocus class="form-control" name="post_content" placeholder="What's on your mind?" rows="7">What's on your mind? </textarea>
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Submit Post">
+</form>
+<br>
+
+{% for p in posts %}
+    "{{p.content}}" by {{p.user}} dated {{p.timestamp}}<br>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

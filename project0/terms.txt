@@ -1,0 +1,132 @@
+normal google search
+
+https://www.google.com/search?q=elizabeth+banks+our+idiot+brother&
+client=safari&source=hp&ei=WSLwY-7wBeDh4-EPpsGrgAc&iflsig=AK50M_UAAAAAY_AwaVsHHA7VyAZL-4V42PdS3bX1tglV&ved=0ahUKEwiugfDA7p39AhXg8DgGHabgCnAQ4dUDCAk&uact=5&
+oq=elizabeth+banks+our+idiot+brother&
+gs_lcp=Cgdnd3Mtd2l6EAMyBQguEIAEOggIABCPARDqAjoICC4QjwEQ6gI6CwguEIAEELEDEIMBOhEILhCABBCxAxCDARDHARDRAzoLCAAQgAQQsQMQgwE6DgguEIAEELEDEMcBENEDOggILhCxAxCDAToICAAQgAQQsQM6CAguEIAEELEDOgUIABCABDoICAAQsQMQgwE6BQgAELEDOg0IABCABBCxAxCDARAKOgoIABCABBCxAxAKOg0ILhCABBCxAxCDARAKOgoILhDUAhCABBAKOgcIABCABBAKOgoILhCABBDUAhAKOgcILhCABBAKOg0IABANEIAEELEDEIMBOgoIABANEIAEELEDOg0ILhANEIAEELEDEIMBOgsILhCDARCxAxCABDoLCC4QgAQQxwEQrwE6CAguEIAEENQCOggILhDUAhCABDoJCAAQFhAeEPEEOgYIABAWEB46BQgAEIYDULsKWKRCYMBDaANwAHgAgAHfAogBvDGSAQgwLjI0LjYuM5gBAKABAbABCg&sclient=gws-wiz
+
+image search
+https://www.google.com/search?q=elizabeth+banks+our+idiot+brother&
+client=safari&
+source=lnms&
+tbm=isch&sa=X&ved=2ahUKEwjSm_XF7p39AhW01jgGHXPOC8EQ_AUoAXoECAEQAw&biw=1440&bih=772&dpr=2
+
+
+
+
+
+all these words 
+(Type the important words:  tri-colour rat terrier)
+
+
+- all these words = 'as_q='
+
+https://www.google.com/search?hl=en&
+as_q=Elizabeth+banks+our+idiot+brother&
+as_epq=&
+as_oq=&
+as_eq=&
+as_nlo=&
+as_nhi=&
+lr=&cr=&
+as_qdr=all&
+as_sitesearch=&
+as_occt=any&
+safe=images&
+as_filetype=&
+tbs=
+
+
+
+this exact word or phrase 
+(Put exact words in quotes:  "rat terrier")
+
+- exact words in quotes  = 'as_epq='
+
+
+google url result
+https://www.google.com/search?hl=en&
+as_q=&
+as_epq=%22Elizabeth+banks+our+idiot+brother%22&
+as_oq=&
+as_eq=&
+as_nlo=&
+as_nhi=&
+lr=&
+cr=&
+as_qdr=all&
+as_sitesearch=&
+as_occt=any&
+safe=images&
+as_filetype=&
+tbs=
+
+my search url result
+https://www.google.com/search?
+as_q=&
+as_epq=%22Elizabeth+banks+our+idiot+brother%22&
+a_oq=&as_eq%22=
+
+
+
+any of these words
+(Type OR between all the words you want:  miniature OR standard)
+
+- any of these words = 'as_oq='
+
+google url result
+
+https://www.google.com/search?hl=en&
+as_q=&
+as_epq=&
+as_oq=Elizabeth+banks+our+idiot+brother&
+as_eq=&
+as_nlo=&
+as_nhi=&
+lr=&
+cr=&
+as_qdr=all&
+as_sitesearch=&
+as_occt=any&
+safe=images&
+as_filetype=&
+tbs=
+
+
+my url result
+https://www.google.com/search?
+as_q=&
+as_epq=&
+as_oq=Elizabeth+banks+our+idiot+brother&as_eq%22=
+
+
+
+none of these words
+(Put a minus sign just before words that you don't want: -rodent, -"Jack Russell")
+
+- none of these words = 'as_eq='
+
+
+
+https://www.google.com/search?hl=en&
+as_q=Elizabeth+banks+&
+as_epq=&
+as_oq=&
+as_eq=our+idiot+brother&
+as_nlo=&
+as_nhi=&lr=&cr=&as_qdr=all&
+as_sitesearch=&
+as_occt=any&safe=images&
+as_filetype=&
+tbs=
+
+https://www.google.com/search?
+as_q=Elizabeth+banks&
+as_epq=&
+a_oq=&
+as_eq%22=our+idiot+brother
+
+
+
+
+

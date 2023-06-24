@@ -1,0 +1,37 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Encyclopedia
+{% endblock %}
+
+{% block body %}
+    <h1>Create a new / update existing wiki entry</h1>
+
+    <form action ="{% url 'new' %}" method="POST">  
+        {% csrf_token %}
+
+        <br><input type="text" name="title" value="Insert title"> <br> <br> <br>
+
+        <!--<textarea name="title" rows="1" cols="29" required >Insert new title here in plain text.  i.e. do not use markup. ##Need to fix these stupid text area box sizes</textarea> -->
+        
+        <textarea name="content" rows="4" cols="50" required>
+Insert new content here in markdown format.
+
+A full description of markdown can be found at:
+
+https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax.
+
+Otherwise, for high level headings use up to six '#'. For example:
+
+# A first-level heading
+## A second-level heading
+### A third-level heading
+
+!!! Pressing return currently returns you to the index page rather than update the wiki
+</textarea>
+    <br> 
+    <input type="submit">
+    </form>
+
+
+{% endblock %}

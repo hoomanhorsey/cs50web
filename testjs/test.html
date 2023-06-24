@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <div>
+        <h1>Yolo!</h1>
+        <h2>0</h2>
+        </div>
+        <script>
+
+           
+            function hello() {
+                alert('Hello, world!')
+            }
+
+            let counter = 0;
+            function count() {
+                counter++;
+            if (counter % 10 ===0)
+                alert(`Count is now ${counter}`)
+
+            }
+        
+            function yolo() {
+                const header = document.querySelector('h1');
+                if (header.innerHTML === 'Yolo!') {
+                    header.innerHTML = 'NoYoLo!';
+                }
+                else {
+                    header.innerHTML = 'Yolo!';
+                }
+            }
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('button').onclick = counter;
+
+        })
+        </script>
+            
+    </head>
+    <body>
+<br>        
+<button onclick="hello()">Click Here For Hello</button>
+<br><br>
+<button onclick="count()">Count</button>
+<br><br>
+ 
+<button onclick="yolo()">Yolo Or NoYolo</button>
+
+
+        </div>
+    </body>
+</html>
+
+
+
