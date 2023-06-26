@@ -16,7 +16,7 @@ def index(request):
     if request.method == "POST":
 
         post_content = request.POST["post_content"]
-        print(post_content)
+        #print(post_content)
 
         post = Post(content=post_content, user=current_user)
         post.save()

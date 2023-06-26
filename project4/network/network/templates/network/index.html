@@ -4,24 +4,38 @@
 
 {% if user.is_authenticated %}
 
+<h3>
+All Posts
+</h3>
+
+
+<div style="border-style: solid; border-color: lightgrey;  margin: 25px 25px 25px 25px">
+
 <form action="{% url 'index' %}" method="post">
     {% csrf_token %}
     Note: currently new post form is visible for all menu items. need to restrict it to All Posts'
     Submitting posts currently saves it to the database but not much more.
 
-    <div class="form-group">
-        <label for="post_content">New Post</label>
+    <div style="border-style: invisible; border-color: lightgrey; margin: 25px 25px 25px 25px" class="form-group">
+        <label for="post_content"><h4>New Post</h4></label>
         <textarea autofocus class="form-control" name="post_content" placeholder="What's on your mind?" rows="7">What's on your mind? </textarea>
     </div>
 
     <input class="btn btn-primary" type="submit" value="Submit Post">
 </form>
+
+</div>
 <br>
 
+<div>
 {% for p in posts %}
-    "{{p.content}}" by {{p.user}} dated {{p.timestamp}}<br>
+<p style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 5px 15px 5px 15px; padding:25px 15px 25px 15px; "> 
+    <strong>{{p.user}}</strong><br>{{p.content}}<br>{{p.timestamp}} <br>TODO: Like button<br>
+    TODO: Edit Button<br>
+    TODO: Comment Button</p>
+    
 {% endfor %}
-
+</div>
 {% endif %}
 
 {% endblock %}
