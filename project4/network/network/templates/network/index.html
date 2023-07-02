@@ -30,7 +30,9 @@ All Posts
 <div>
 {% for p in posts %}
 <p style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 5px 15px 5px 15px; padding:25px 15px 25px 15px; "> 
-    <strong>{{p.user}}</strong><br>{{p.content}}<br>{{p.timestamp}} <br>TODO: Like button<br>
+    <strong style="font-size:25px;"">{{p.user}}</strong><br>{{p.content}}<br>{{p.timestamp}} 
+    <br> Likes: {{p.likes}}
+    <br>TODO: Like button<br>
     TODO: Edit Button<br>
     TODO: Comment Button</p>
     

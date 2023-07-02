@@ -33,7 +33,7 @@ def index(request):
     # Default route
     else:              
         # get those bids with listing id
-        posts = Post.objects.all()
+        posts = Post.objects.all().order_by("-timestamp")
         #print(posts)
 
     return render(request, "network/index.html",
