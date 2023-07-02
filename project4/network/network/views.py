@@ -7,11 +7,15 @@ from django.urls import reverse
 from .models import User, Post, Follower, Like
 
 
+
+ ## TODO - Maybe break the loading of posts into a separate function?
+
 def index(request):
  
+
     # extracting user name from request
     current_user = request.user
-    print(current_user)
+    #print(current_user)
 
     if request.method == "POST":
 
@@ -30,7 +34,7 @@ def index(request):
     else:              
         # get those bids with listing id
         posts = Post.objects.all()
-        print(posts)
+        #print(posts)
 
     return render(request, "network/index.html",
                   {
