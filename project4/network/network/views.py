@@ -12,7 +12,6 @@ from .models import User, Post, Follower, Like
 
 def index(request):
  
-
     # extracting user name from request
     current_user = request.user
     #print(current_user)
@@ -28,18 +27,27 @@ def index(request):
         
         return HttpResponseRedirect(reverse("index" ))
 
-
-
     # Default route
     else:              
         # get those bids with listing id
         posts = Post.objects.all().order_by("-timestamp")
         #print(posts)
 
-    return render(request, "network/index.html",
+        if request.user.is_authenticated == False:
+            return render(request, "network/index.html",
                   {
-                      "posts" :posts
+                      "posts":posts, 
                   })
+        else:
+            user = Post.objects.filter(user = current_user)
+            print(user)
+            return render(request, "network/index.html",
+                  {
+                      "posts":posts, "user_posts": user,
+                  })
+        
+
+
 
 
 def login_view(request):

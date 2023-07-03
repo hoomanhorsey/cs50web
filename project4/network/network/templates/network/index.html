@@ -1,43 +1,74 @@
 {% extends "network/layout.html" %}
 
+{% load static %}
+
+
 {% block body %}
 
 {% if user.is_authenticated %}
+<!-- Post form View-->
+<div id="postform-view" style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 25px 25px 25px 25px; padding:25px 15px 25px 15px;">
 
-<h3>
-All Posts
-</h3>
+    <h3>
+        All Posts
+    </h3>
 
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        Note: currently new post form is visible for all menu items. need to restrict it to All Posts'
+        Submitting posts currently saves it to the database but not much more.
 
-<div style="border-style: solid; border-color: lightgrey;  margin: 25px 25px 25px 25px">
-
-<form action="{% url 'index' %}" method="post">
-    {% csrf_token %}
-    Note: currently new post form is visible for all menu items. need to restrict it to All Posts'
-    Submitting posts currently saves it to the database but not much more.
-
-    <div style="border-style: invisible; border-color: lightgrey; margin: 25px 25px 25px 25px" class="form-group">
-        <label for="post_content"><h4>New Post</h4></label>
-        <textarea autofocus class="form-control" name="post_content" placeholder="What's on your mind?" rows="7">What's on your mind? </textarea>
-    </div>
-
-    <input class="btn btn-primary" type="submit" value="Submit Post">
-</form>
-
+        <div style="border-style: invisible; border-color: lightgrey; margin: 25px 25px 25px 25px" class="form-group">
+            <label for="post_content"><h4>New Post</h4></label>
+            <textarea autofocus class="form-control" name="post_content" placeholder="What's on your mind?" rows="7">What's on your mind? </textarea>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Submit Post">
+    </form>
 </div>
 <br>
-
-<div>
-{% for p in posts %}
-<p style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 5px 15px 5px 15px; padding:25px 15px 25px 15px; "> 
-    <strong style="font-size:25px;"">{{p.user}}</strong><br>{{p.content}}<br>{{p.timestamp}} 
-    <br> Likes: {{p.likes}}
-    <br>TODO: Like button<br>
-    TODO: Edit Button<br>
-    TODO: Comment Button</p>
-    
-{% endfor %}
-</div>
 {% endif %}
+
+<!-- Posts View-->
+<div id="post-view">
+    {% for p in posts %}
+    <p style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 5px 15px 5px 15px; padding:25px 15px 25px 15px; "> 
+        <strong style="font-size:25px;"">{{p.user}}</strong><br>{{p.content}}<br>{{p.timestamp}} 
+        <br> Likes: {{p.likes}}
+        <br>TODO: Like button<br>
+        TODO: Edit Button<br>
+        TODO: Comment Button</p>      
+    {% endfor %}
+</div>
+
+
+{% if user.is_authenticated %}
+    <!-- User View-->
+    <div id="user-view">
+
+        Followers: <br>
+        Followed:  <br>
+
+        {% for p in user_posts %}
+        <p style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 5px 15px 5px 15px; padding:25px 15px 25px 15px; "> 
+            <strong style="font-size:25px;"">{{p.user}}</strong><br>{{p.content}}<br>{{p.timestamp}} 
+            <br> Likes: {{p.likes}}
+            <br>TODO: Like button<br>
+            TODO: Edit Button<br>
+            TODO: Comment Button</p>       
+        {% endfor %}
+    </div>
+
+    <!-- Follower View-->
+    <div id="follow-view">
+    The “Following” link in the navigation bar should take the user to a page where they see all posts made by users that the current user follows.
+    </div>
+
+{% endif %}
+
+
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'network/network.js' %}"></script>
 
 {% endblock %}
