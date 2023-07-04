@@ -1,0 +1,14 @@
+
+.post_div {
+    border-color: lightgrey; 
+    border-radius:15px; 
+    border-style: solid; 
+    margin: 5px 15px 5px 15px; 
+    padding:25px 15px 25px 15px;
+}
+
+
+.testclass {
+    font-size: 150px;
+    font-family: 'Courier New', Courier, monospace;
+}

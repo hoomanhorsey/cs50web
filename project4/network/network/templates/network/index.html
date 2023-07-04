@@ -3,20 +3,21 @@
 {% load static %}
 
 
+
 {% block body %}
 
 {% if user.is_authenticated %}
+
+
 <!-- Post form View-->
 <div id="postform-view" style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 25px 25px 25px 25px; padding:25px 15px 25px 15px;">
 
     <h3>
-        All Posts
+    All Posts
     </h3>
 
     <form action="{% url 'index' %}" method="post">
         {% csrf_token %}
-        Note: currently new post form is visible for all menu items. need to restrict it to All Posts'
-        Submitting posts currently saves it to the database but not much more.
 
         <div style="border-style: invisible; border-color: lightgrey; margin: 25px 25px 25px 25px" class="form-group">
             <label for="post_content"><h4>New Post</h4></label>
@@ -29,32 +30,63 @@
 {% endif %}
 
 <!-- Posts View-->
+
 <div id="post-view">
     {% for p in posts %}
-    <p style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 5px 15px 5px 15px; padding:25px 15px 25px 15px; "> 
-        <strong style="font-size:25px;"">{{p.user}}</strong><br>{{p.content}}<br>{{p.timestamp}} 
+    <div style="border-color: lightgrey; 
+    border-radius:15px; 
+    border-style: solid; 
+    margin: 5px 15px 5px 15px; 
+    padding:25px 15px 25px 15px;">
+ 
+
+        <!--TODO 
+        Need to include data id to link, and then pass that through into the function to deliver links to the particular user
+
+        Need to also parameterise the user function so that it delivers the page of whatever user is included as an argument
+        -->
+        <p id="userlink" style="font-size:25px; font-weight: bold ;"> <a href="#">{{p.user}}</a> </p>
+
+        {{p.content}}<br>{{p.timestamp}} 
         <br> Likes: {{p.likes}}
         <br>TODO: Like button<br>
         TODO: Edit Button<br>
-        TODO: Comment Button</p>      
+        TODO: Comment Button    
+        
+    </div>
+
+  
     {% endfor %}
 </div>
 
 
+
 {% if user.is_authenticated %}
+
     <!-- User View-->
     <div id="user-view">
 
-        Followers: <br>
-        Followed:  <br>
+        <p style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 5px 15px 5px 15px; padding:25px 15px 25px 15px;">
+        <strong style="font-size:25px;">Followers</strong>: {{ user.followers_of_user }}<br>
+        <strong style="font-size:25px;">Followed: </strong> {{ user.followed_by_user }} <br>
+        </p>
 
         {% for p in user_posts %}
-        <p style="border-style: solid; border-radius:15px; border-color: lightgrey; margin: 5px 15px 5px 15px; padding:25px 15px 25px 15px; "> 
-            <strong style="font-size:25px;"">{{p.user}}</strong><br>{{p.content}}<br>{{p.timestamp}} 
-            <br> Likes: {{p.likes}}
-            <br>TODO: Like button<br>
+         <div style="border-color: lightgrey; 
+        border-radius:15px; 
+        border-style: solid; 
+        margin: 5px 15px 5px 15px; 
+        padding:25px 15px 25px 15px;">
+
+        <p  style="font-size:25px; font-weight: bold ;"> <a href="#">{{p.user}}</a> </p>
+
+            {{p.content}}<br>
+            {{p.timestamp}}<br> 
+            Likes: {{p.likes}}<br>
+            TODO: Like button<br>
             TODO: Edit Button<br>
             TODO: Comment Button</p>       
+            </div>
         {% endfor %}
     </div>
 

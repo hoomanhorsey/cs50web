@@ -18,37 +18,36 @@ def index(request):
 
     if request.method == "POST":
 
+        # Processing a post to the network
         post_content = request.POST["post_content"]
-        #print(post_content)
 
         post = Post(content=post_content, user=current_user)
         post.save()
-        # TODO - insert the post in the ddatabase?
-        
+        # TODO - insert the post in the ddatabase?       
         return HttpResponseRedirect(reverse("index" ))
 
     # Default route
     else:              
-        # get those bids with listing id
+        
+        # get all posts
         posts = Post.objects.all().order_by("-timestamp")
-        #print(posts)
 
+        # if not logged in, show all posts only
         if request.user.is_authenticated == False:
             return render(request, "network/index.html",
                   {
                       "posts":posts, 
                   })
+        # if logged in, get all user posts
         else:
-            user = Post.objects.filter(user = current_user)
-            print(user)
+            user_posts = Post.objects.filter(user = current_user).order_by("-timestamp")
+            print(current_user)
             return render(request, "network/index.html",
                   {
-                      "posts":posts, "user_posts": user,
+                      "posts":posts, 
+                      "user": current_user, "user_posts": user_posts,
                   })
         
-
-
-
 
 def login_view(request):
     if request.method == "POST":
