@@ -1,5 +1,15 @@
 
-.post_div {
+
+
+.postform {
+    border-color: lightgrey; 
+    border-radius:15px; 
+    border-style: solid; 
+    margin: 25px 25px 25px 25px; 
+    padding:25px 15px 25px 15px;
+}
+
+.post_style {
     border-color: lightgrey; 
     border-radius:15px; 
     border-style: solid; 
@@ -8,7 +18,9 @@
 }
 
 
-.testclass {
-    font-size: 150px;
+.testingonly {
+    font-size: 22px;
     font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
 }
+

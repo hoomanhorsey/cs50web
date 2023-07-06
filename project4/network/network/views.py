@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
+from django.core.paginator import Paginator
+
 from .models import User, Post, Follower, Like
 
 
@@ -31,23 +33,47 @@ def index(request):
         
         # get all posts
         posts = Post.objects.all().order_by("-timestamp")
+        paginator = Paginator(posts, 4)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+       
+
+        
 
         # if not logged in, show all posts only
         if request.user.is_authenticated == False:
             return render(request, "network/index.html",
                   {
                       "posts":posts, 
+                      "page_obj": page_obj,
                   })
         # if logged in, get all user posts
         else:
             user_posts = Post.objects.filter(user = current_user).order_by("-timestamp")
             print(current_user)
+
+            current_user_posts = Post.objects.filter(user=current_user).order_by("-timestamp")
+                    #TODO, can I parameterise the current user here to be the clicked on user???  I can but it would need a new route. If it's in javascript i don't think I can.
+            paginator_current_user =  paginator = Paginator(current_user_posts, 2)
+            page_obj_current_user = paginator_current_user.get_page(page_number)
+
+
+
             return render(request, "network/index.html",
                   {
                       "posts":posts, 
                       "user": current_user, "user_posts": user_posts,
+                      "page_obj": page_obj,
+                      "page_obj_current_user": page_obj_current_user,
+                      
                   })
         
+
+def user_view(request):
+    pass
+
+
 
 def login_view(request):
     if request.method == "POST":
