@@ -4,77 +4,130 @@
 
 {% block body %}
 
-{% if user.is_authenticated %}
+    {% if user.is_authenticated %}
 
-    <!-- Post form View-->
-    <div class="postform" id="postform-view">
+      <!-- Post Form View-->
+      <div class="postform" id="postform-view">
         <form action="{% url 'index' %}" method="post">
-            {% csrf_token %}
-            <div  class="form-group">
-                <label for="post_content"><h4>New Post</h4></label>
-                <textarea autofocus class="form-control" name="post_content" placeholder="What's on your mind?" rows="7">What's on your mind? </textarea>
-            </div>
-            <input class="btn btn-primary" type="submit" value="Submit Post">
+        {% csrf_token %}
+          <div  class="form-group">
+            <label for="post_content"><h4>New Post</h4></label>
+            <textarea autofocus class="form-control" name="post_content" placeholder="What's on your mind?" rows="7">What's on your mind? </textarea>
+          </div>
+          <input class="btn btn-primary" type="submit" value="Submit Post">
         </form>
-    </div>
-    <br>
+      </div>        
+      <br>
 
-     <!-- Follower View-->
-     <div id="follow-view">
+      <!-- Follower View-->
+      <div id="follow-view">
         The “Following” link in the navigation bar should take the user to a page where they see all posts made by users that the current user follows.
-    </div>
-{% endif %}
+      </div>
 
+    {% endif %}
 
-<!-- Posts View-->
-<div id="all_post-view">
+    <!-- All Posts View-->
+    <div id="all_post-view">
 
     <h3 style="font-size: 35px";><strong>All Posts</strong></h3>
     <br>
 
-    <!-- Pagination logic-->
-    <div class="pagination">
-        <span class="step-links">
+      <!-- Pagination logic-->
+        <div class="pagination">
+          <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+              <a href="?page=1">&laquo; first</a>
+              <a href="?page={{ page_obj.previous_page_number }}">previous</a>
             {% endif %}
-    
+        
             <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+              Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
             </span>
-    
+        
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+              <a href="?page={{ page_obj.next_page_number }}">next</a>
+              <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
+          </span>
+        </div><br>
+
+        <!-- Individual posts-->
+        {% for p in page_obj %}
+          <div class="post_style">
+            <p id="userlink" class="user_pag" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
+              <a href="#">{{p.user}}</a>
+            </p>
+         
+            {{p.content}}<br>
+            {{p.timestamp}}<br> 
+            Likes: {{p.likes}}<br>
+            <button>Like</button>TODO: Like button<br>
+            TODO: Edit Button<br>
+            TODO: Comment Button  
+            <br>
+          </div>
+        {% endfor %}
+    </div>
+
+    <!-- Test view -->
+    <!-- User View-->
+    <div id="user_view">
+    
+      <h2>{{current_user}}</h2><br>
+        
+      <!-- Followers/Following-->
+      <p class="post_style" >
+        <strong style="font-size:25px;">Followers:</strong> {{ selected_user.followers_of_user }}<br>
+        <strong style="font-size:25px;">Followed: </strong> {{ selected_user.followed_by_user }} <br>
+      </p>
+
+    <!-- pagination-->
+      <div class="pagination">
+        <span class="step-links">
+          {% if page_obj_selected_user.has_previous %}
+           <a href="?page=1">&laquo; first</a>
+           <a href="?page={{ page_obj_selected_user.previous_page_number }}">previous</a>
+          {% endif %}
+
+        <span class="current">
+          Page {{ page_obj_selected_user.number }} of {{ page_obj_selected_user.paginator.num_pages }}.
+        </span>
+
+          {% if page_obj_selected_user.has_next %}
+            <a href="?page={{ page_obj_selected_user.next_page_number }}">next</a>
+            <a href="?page={{ page_obj_selected_user.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
         </span>
     </div><br>
 
-    <!-- Individual posts-->
-    {% for p in page_obj %}
-        <div class="post_style">
-        <p id="userlink"
-        style="font-size:25px; font-weight: bold ;"> <a href="{% url 'user_index' p.user %}">{{p.user}}</a> </p>
-
-        {{p.content}}<br>
-        {{p.timestamp}}<br> 
-        Likes: {{p.likes}}<br>
-        <button>Like</button>TODO: Like button<br>
-        TODO: Edit Button<br>
-        TODO: Comment Button  
-        <br><br>
-        </div>
-    {% endfor %}
-
+    <!-- Individual User Posts-->
+    {% for p in page_obj_selected_user %}
+      <div class="post_style">
+        <p id="userlink" class="user_page" 
+          style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
+        </p>
+     
+          {{p.content}}<br>
+          {{p.timestamp}}<br> 
+          Likes: {{p.likes}}<br>
+          TODO: Like button<br>
+          TODO: Edit Button<br>
+          TODO: Comment Button  
+          <br><br>
+      </div>
+    {% endfor %}   
+    
+    </div>
+  
 
 {% endblock %}
 
+<!--
 {% block script %}
 <script src="{% static 'network/network.js' %}"></script>
 
 {% endblock %}
-
+-->
 
 
 
@@ -137,3 +190,5 @@ Followers/Following
 
 
     --> 
+
+

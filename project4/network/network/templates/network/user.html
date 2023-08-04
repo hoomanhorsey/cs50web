@@ -7,56 +7,61 @@
 {% if user.is_authenticated %}
 
 <br>
-<!-- User View-->   
-<div id="user-view">
-    <br>
-    <h3 style="font-size: 35px";><strong>{{selected_user.username}}</strong></h3>
-    <br>
+  <!-- User View-->   
+  <div id="user-view">
 
-<!-- Followers/Following-->
+    <br> <h3 style="font-size: 35px";><strong>{{selected_user.username}}</strong></h3> <br>
+
+    Logic to determine which button to show
+    <button>Follow/Unfollow</button>
+    <br>
+    Listen for button -> Update database -> change button to other button? <br>
+    Update database via views and routes, or can do via javascript?
+
+  <!-- Followers/Following-->
     <p class="post_style" >
-        <strong style="font-size:25px;">Followers</strong>: {{ selected_user.followers_of_user }}<br>
+        <strong style="font-size:25px;">Followers:</strong> {{ selected_user.followers_of_user }}<br>
         <strong style="font-size:25px;">Followed: </strong> {{ selected_user.followed_by_user }} <br>
     </p>
 
     <div class="pagination">
-        <span class="step-links">
-            {% if page_obj_selected_user.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj_selected_user.previous_page_number }}">previous</a>
-            {% endif %}
+      <span class="step-links">
+        {% if page_obj_selected_user.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj_selected_user.previous_page_number }}">previous</a>
+        {% endif %}
     
-            <span class="current">
-                Page {{ page_obj_selected_user.number }} of {{ page_obj_selected_user.paginator.num_pages }}.
-            </span>
-    
-            {% if page_obj_selected_user.has_next %}
-                <a href="?page={{ page_obj_selected_user.next_page_number }}">next</a>
-                <a href="?page={{ page_obj_selected_user.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
+        <span class="current">
+          Page {{ page_obj_selected_user.number }} of {{ page_obj_selected_user.paginator.num_pages }}.
         </span>
-    </div>
-    <br>
+    
+        {% if page_obj_selected_user.has_next %}
+          <a href="?page={{ page_obj_selected_user.next_page_number }}">next</a>
+          <a href="?page={{ page_obj_selected_user.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div><br>
 
     {% for p in page_obj_selected_user %}
-        <div class="post_style">
-            <p id="userlink"
-            style="font-size:25px; font-weight: bold;"> <a href="{% url 'user_index' p.user%}">{{p.user}}</a> </p>
-            {{p.content}}<br>
-            {{p.timestamp}}<br> 
-            Likes: {{p.likes}}<br>
-            TODO: Like button<br>
-            TODO: Edit Button<br>
-            TODO: Comment Button  
-            <br><br>
-        </div>
+      <div class="post_style">
+        <p id="userlink"
+          style="font-size:25px; font-weight: bold;"> <a href="{% url 'user_index' p.user%}">{{p.user}}</a> </p>
+          {{p.content}}<br>
+          {{p.timestamp}}<br> 
+          Likes: {{p.likes}}<br>
+          TODO: Like button<br>
+          TODO: Edit Button<br>
+          TODO: Comment Button  
+        <br><br>
+      </div>
     {% endfor %}   
 
 {% endif %}
 
 {% endblock %}
 
+<!--  I HAVE DELETED THE SCRIPT TAGS FROM THE INDIVIDUAL PAGES AND JUST PUT IT IN THE LAYOUT.
 {% block script %}
 <script src="{% static 'network/network.js' %}"></script>
-
 {% endblock %}
+-->

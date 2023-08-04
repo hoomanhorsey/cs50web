@@ -10,6 +10,6 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
  
-    path("<str:name>", views.user_index, name="user_index"),
+    #path("<str:name>", views.user_index, name="user_index"),
     
 ]

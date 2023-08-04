@@ -1,0 +1,18 @@
+
+       <!--    <p id="userlink" style="font-size:25px; font-weight: bold ;">
+              <a href="{% url 'user_index' p.user %}"> {{p.user}}</a>
+            </p>-->
+
+
+
+               <!--<p id="userlink"
+          style="font-size:25px; font-weight: bold;"> <a href="{% url 'user_index' p.user%}">{{p.user}}</a> 
+        </p>-->
+
+
+
+          <!-- 
+                        <li id="user" class="nav-item">
+                        <a class="nav-link" href="{% url 'user_index' user.username %}"><strong>{{ user.username }}</strong></a>
+                        </li>
+                    -->

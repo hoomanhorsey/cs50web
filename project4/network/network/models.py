@@ -5,7 +5,8 @@ from django.db import models
 class User(AbstractUser):
     followed_by_user = models.IntegerField(default=0)
     followers_of_user = models.IntegerField(default=0)
-    pass
+    def __str__(self):
+        return f"{self.username}" 
 
 
 class Post(models.Model):
