@@ -11,5 +11,7 @@ urlpatterns = [
     path("register", views.register, name="register"),
  
     #path("<str:name>", views.user_index, name="user_index"),
+
+    path("<str:request_name>", views.index, name="index"),
     
 ]

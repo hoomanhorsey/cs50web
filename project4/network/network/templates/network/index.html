@@ -54,10 +54,13 @@
         <!-- Individual posts-->
         {% for p in page_obj %}
           <div class="post_style">
-            <p id="userlink" class="user_pag" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
+            <!-- <p id="userlink" class="user_pag" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
               <a href="#">{{p.user}}</a>
+            </p> -->
+            <p id="userlink" class="user_pag" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
+              <a href="{% url 'index' p.user %}">{{p.user}}</a>
             </p>
-         
+            
             {{p.content}}<br>
             {{p.timestamp}}<br> 
             Likes: {{p.likes}}<br>
@@ -69,7 +72,6 @@
         {% endfor %}
     </div>
 
-    <!-- Test view -->
     <!-- User View-->
     <div id="user_view">
     

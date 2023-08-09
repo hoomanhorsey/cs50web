@@ -9,8 +9,19 @@ from django.core.paginator import Paginator
 from .models import User, Post, Follower, Like
 
 
-def index(request):
-    # extracting username from request
+def index(request, request_name=None):
+
+    # Checking for name argument
+
+
+    # Test for name....
+    if request_name == None:
+        print("Name = None")
+    else:
+        print("Name from request: ", request_name)
+
+
+  # extracting username from request
     current_user = request.user
     print("Print checks when requesting 'index' page, triggered by clicking 'all posts'")
     print("contents of 'request.user' = '",request.user,"'")
@@ -35,10 +46,12 @@ def index(request):
       # Test if user is logged in:
         if request.user.is_authenticated:
           print("YEST")
+
           # get selected user
           selected_user = User.objects.get(username=current_user)
           print("selected user", selected_user)
           print("type", type(selected_user))
+          
           # get posts of selected user
           selected_user_posts = Post.objects.filter(user=selected_user.id).order_by("-timestamp")
           print("selected user posts", selected_user_posts)
@@ -61,7 +74,7 @@ def index(request):
           "selected_user": selected_user, 
             })
 
-        #if user is not authenticated, i.e if no-one logged in
+        # if user is not authenticated, i.e if no-one logged in
         else:
           print("NOZE")
           # get all posts
