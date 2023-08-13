@@ -10,24 +10,15 @@ from .models import User, Post, Follower, Like
 
 
 def index(request, request_name=None):
-
-    # Checking for name argument
-
-
-    # Test for name....
-    if request_name == None:
-        print("Name = None")
+    
+    # Checking for name argument - #print test, can delete
+    if (request_name == None): 
+        print("Name = None")  
     else:
         print("Name from request: ", request_name)
 
-
-  # extracting username from request
+    # extracting username from request
     current_user = request.user
-    print("Print checks when requesting 'index' page, triggered by clicking 'all posts'")
-    print("contents of 'request.user' = '",request.user,"'")
-    print("variable current user = '", current_user, "'")
-    
-    #TODO - Do I need to extract the name of user for both post and get routes, or is it only used in the post route?
 
     # Post route, when posting a new 'post'.
     if request.method == "POST":
@@ -43,36 +34,56 @@ def index(request, request_name=None):
     # Default route
     else:             
 
-      # Test if user is logged in:
+      # Path if user is logged in:
         if request.user.is_authenticated:
-          print("YEST")
+        
+          # sub-route if url is blank, i.e. All Post
+          if (request_name == None): 
+            print("Name = None") #print test, can delete
 
-          # get selected user
-          selected_user = User.objects.get(username=current_user)
-          print("selected user", selected_user)
-          print("type", type(selected_user))
-          
-          # get posts of selected user
-          selected_user_posts = Post.objects.filter(user=selected_user.id).order_by("-timestamp")
-          print("selected user posts", selected_user_posts)
-          # paginate posts of selected users
-          paginator_selected_user = Paginator(selected_user_posts, 2)
-          page_number = request.GET.get('page')
-          page_obj_selected_user = paginator_selected_user.get_page(page_number)
+            # get active user
+            active_user = User.objects.get(username=current_user)
+                     
+            # get posts of active user
+            active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
 
-          # get posts of all users
-          posts = Post.objects.all().order_by("-timestamp")
-          # paginate posts of all users
-          paginator = Paginator(posts, 4)
-          page_number = request.GET.get('page')
-          page_obj = paginator.get_page(page_number)   
-          
-          return render(request, "network/index.html",
-          { "page_obj" : page_obj,
-          "current_user" : current_user, #get rid of if user has it's own path
-          "page_obj_selected_user": page_obj_selected_user,
-          "selected_user": selected_user, 
-            })
+            # paginate posts of active users
+            paginator_active_user = Paginator(active_user_posts, 2)
+            page_number = request.GET.get('page')
+            page_obj_active_user = paginator_active_user.get_page(page_number)
+
+            # get posts of all users
+            posts = Post.objects.all().order_by("-timestamp")
+            # paginate posts of all users
+            paginator = Paginator(posts, 4)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)   
+
+            return render(request, "network/index.html",
+            { "page_obj" : page_obj,
+            "current_user" : current_user, #get rid of if user has it's own path
+            "page_obj_active_user": page_obj_active_user,
+            "active_user": active_user, 
+                })
+
+          # Path for selected user
+          else:
+
+            print(request_name)  #print test, can delete
+
+            selected_user = User.objects.get(username=request_name)
+            print("selected user: ", selected_user)
+    
+            selected_user_posts = Post.objects.filter(user=selected_user.id).order_by("-timestamp")
+
+            paginator_selected_user = Paginator(selected_user_posts, 2)
+            page_number = request.GET.get('page')
+            page_obj_selected_user = paginator_selected_user.get_page(page_number)
+            
+            return render(request, "network/index.html",
+            {"current_user" : current_user, #get rid of if user has it's own path           
+            "page_obj_selected_user": page_obj_selected_user,
+            "selected_user": selected_user})
 
         # if user is not authenticated, i.e if no-one logged in
         else:
@@ -87,27 +98,107 @@ def index(request, request_name=None):
           return render(request, "network/index.html",
             {"page_obj" : page_obj,
             "current_user" : current_user, })
+        
+
+
+
+
+def index_selecteduser(request, request_name=None):
+    print("We have traversed the index_selected user function, even if the html doesn't stay with the view that is rendered")
+    # Checking for name argument - #print test, can delete
+    if (request_name == None): 
+        print("Name = None")  
+    else:
+        print("Name from request: ", request_name)
+
+    # extracting username from request
+    current_user = request.user
+    
+    # Path if user is logged in:
+    if request.user.is_authenticated:
+        
+        # sub-route if url is blank, i.e. All Post
+        if (request_name == None): 
+            print("Name = None") #print test, can delete
+
+            # get active user
+            active_user = User.objects.get(username=current_user)
+                        
+            # get posts of active user
+            active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
+
+            # paginate posts of active users
+            paginator_active_user = Paginator(active_user_posts, 2)
+            page_number = request.GET.get('page')
+            page_obj_active_user = paginator_active_user.get_page(page_number)
+
+            # get posts of all users
+            posts = Post.objects.all().order_by("-timestamp")
+            # paginate posts of all users
+            paginator = Paginator(posts, 4)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)   
+
+            return render(request, "network/index_user.html",
+            { "page_obj" : page_obj,
+            "current_user" : current_user, #get rid of if user has it's own path
+            "page_obj_active_user": page_obj_active_user,
+            "active_user": active_user, 
+                })
+
+        # Path for selected user
+        else:
+
+            print("Request Name: ", request_name)  #print test, can delete
+
+            selected_user = User.objects.get(username=request_name)
+            print("selected user: ", selected_user)
+
+            selected_user_posts = Post.objects.filter(user=selected_user.id).order_by("-timestamp")
+
+            paginator_selected_user = Paginator(selected_user_posts, 2)
+            page_number = request.GET.get('page')
+            page_obj_selected_user = paginator_selected_user.get_page(page_number)
+            
+            return render(request, "network/index.html",
+            {"current_user" : current_user, #get rid of if user has it's own path           
+            "page_obj_selected_user": page_obj_selected_user,
+            "selected_user": selected_user})
+
+        # if user is not authenticated, i.e if no-one logged in
+    else:
+        print("NOZE")
+        # get all posts
+        posts = Post.objects.all().order_by("-timestamp")
+        # render for pagination
+        paginator = Paginator(posts, 4)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)   
+    
+        return render(request, "network/index.html",
+        {"page_obj" : page_obj,
+        "current_user" : current_user, })        
 
 #this function is no longer really needed, as it is a one page app
-def user_index(request, name):
+def index_user(request, name):
     print("Printing checks when route is directed to user_index:")
     print("name", name)
     print(type(name))
        
-    selected_user = User.objects.get(username=name)
+    active_user = User.objects.get(username=name)
    
-    print("id", selected_user.id)  
-    print("selected user:", selected_user)
+    print("id", active_user.id)  
+    print("active user:", active_user)
 
-    selected_user_posts = Post.objects.filter(user=selected_user.id).order_by("-timestamp")
+    active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
 
-    paginator_selected_user = Paginator(selected_user_posts, 2)
+    paginator_active_user = Paginator(active_user_posts, 2)
     page_number = request.GET.get('page')
-    page_obj_selected_user = paginator_selected_user.get_page(page_number)
+    page_obj_active_user = paginator_active_user.get_page(page_number)
 
     return render(request, "network/user.html",{
-                      "page_obj_selected_user": page_obj_selected_user,
-                      "selected_user": selected_user
+                      "page_obj_active_user": page_obj_active_user,
+                      "active_user": active_user
                   })
 
 

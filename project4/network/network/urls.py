@@ -12,6 +12,6 @@ urlpatterns = [
  
     #path("<str:name>", views.user_index, name="user_index"),
 
-    path("<str:request_name>", views.index, name="index"),
+    path("<str:request_name>", views.index_selecteduser, name="index_user"),
     
 ]

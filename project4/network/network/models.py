@@ -27,8 +27,8 @@ class Like(models.Model):
     
 
 class Follower(models.Model):
-    followed = models.ManyToManyField(User, null=True, blank=True, related_name="followed")
-    follower = models.ManyToManyField(User, null=True, blank=True, related_name="follower")
+    followed = models.ManyToManyField(User, blank=True, related_name="followed")
+    follower = models.ManyToManyField(User, blank=True, related_name="follower")
     timestamp = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"{self.followed} followed by {self.follower}, timestamp: {self.timestamp}"
