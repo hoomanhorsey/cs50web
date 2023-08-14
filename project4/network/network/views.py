@@ -201,6 +201,24 @@ def index_user(request, name):
                       "active_user": active_user
                   })
 
+def demo_user(request, request_name=None):
+    print(request, request_name)
+
+    active_user = User.objects.get(username=request_name)
+
+    print("active_user: ", active_user)
+
+    active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
+
+    paginator_active_user = Paginator(active_user_posts, 2)
+    page_number = request.GET.get('page')
+    page_obj_active_user = paginator_active_user.get_page(page_number)
+
+    return render(request, "network/demo_user.html",{
+                      "page_obj_active_user": page_obj_active_user,
+                      "active_user": active_user
+                  })
+    
 
 def login_view(request):
     if request.method == "POST":

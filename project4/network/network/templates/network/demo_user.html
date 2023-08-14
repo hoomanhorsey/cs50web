@@ -1,0 +1,212 @@
+{% extends "network/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+
+    <!-- selected User View-->
+    <div id="selected_user_view">
+
+    This is the 'selected_user_view'
+          
+    <h2>This is the selected user: {{selected_user}}</h2><br>
+    <h2>This is the active user: {{active_user}}</h2><br>
+    <h2>This is the current user: {{current_user}}</h2><br>
+    
+    <!-- Followers/Following-->
+    <p class="post_style" >
+      <strong style="font-size:25px;">Followers:</strong> {{ active_user.followers_of_user }}<br>
+      <strong style="font-size:25px;">Followed: </strong> {{ active_user.followed_by_user }} <br>
+    </p>
+
+    <!-- pagination-->
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj_active_user.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj_active_user.previous_page_number }}">previous</a>
+        {% endif %}
+
+      <span class="current">
+        Page {{ page_obj_active_user.number }} of {{ page_obj_active_user.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj_active_user.has_next %}
+        <a href="?page={{ page_obj_active_user.next_page_number }}">next</a>
+        <a href="?page={{ page_obj_active_user.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+      </span>
+    </div><br>
+
+    <!-- Individual selectedUser Posts-->
+    {% for p in page_obj_active_user %}
+      <div class="post_style">
+        <p id="userlink" class="active_user_page" 
+          style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
+        </p>
+          REF: FROM DEMO USER VIEW
+          <br>
+          {{p.content}}<br>
+          {{p.timestamp}}<br> 
+          Likes: {{p.likes}}<br>
+          TODO: Like button<br>
+          TODO: Edit Button<br>
+          TODO: Comment Button  
+          <br><br>
+      </div>
+{% endfor %}   
+
+</div>
+
+
+
+{% endblock %}
+
+<!--
+{% block script %}
+<script src="{% static 'network/network.js' %}"></script>
+
+{% endblock %}
+-->
+
+
+
+
+
+<!-- User View
+
+<br>
+NOTE: User posts simply replicate 'All Posts currently and draw from the same list.  Consider whether you wish to create separate lists for users, or simply filter All Posts by name?
+
+ User posts
+
+<div id="user-view">
+
+Followers/Following
+
+<p class="post_style" >
+    <strong style="font-size:25px;">Followers</strong>: {{ user.followers_of_user }}<br>
+    <strong style="font-size:25px;">Followed: </strong> {{ user.followed_by_user }} <br>
+</p>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj_current_user.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj_current_user.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj_current_user.number }} of {{ page_obj_current_user.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj_current_user.has_next %}
+                <a href="?page={{ page_obj_current_user.next_page_number }}">next</a>
+                <a href="?page={{ page_obj_current_user.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+        <br>
+
+    {% for p in page_obj_current_user %}
+        <div class="post_style">
+        <p id="userlink"
+        style="font-size:25px; font-weight: bold ;"> <a href="#">{{p.user}}</a> </p>
+
+        {{p.content}}<br>
+        {{p.timestamp}}<br> 
+        Likes: {{p.likes}}<br>
+        TODO: Like button<br>
+        TODO: Edit Button<br>
+        TODO: Comment Button  
+        <br><br>
+</div>
+
+</div>
+    {% endfor %}
+
+
+     BREAK
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--
+      User View
+    <div id="user_view">
+
+      This is the 'user_view, deprecated'
+   
+
+      <h2>This is the selected user: {{selected_user}}</h2><br>
+      <h2>This is the active user: {{active_user}}</h2><br>
+      <h2>This is the current user: {{current_user}}</h2><br>
+        
+      Followers/Following
+      <p class="post_style" >
+        <strong style="font-size:25px;">Followers:</strong> {{ active_user.followers_of_user }}<br>
+        <strong style="font-size:25px;">Followed: </strong> {{ active_user.followed_by_user }} <br>
+      </p>
+
+    pagination
+      <div class="pagination">
+        <span class="step-links">
+          {% if page_obj_active_user.has_previous %}
+           <a href="?page=1">&laquo; first</a>
+           <a href="?page={{ page_obj_active_user.previous_page_number }}">previous</a>
+          {% endif %}
+
+        <span class="current">
+          Page {{ page_obj_active_user.number }} of {{ page_obj_active_user.paginator.num_pages }}.
+        </span>
+
+          {% if page_obj_active_user.has_next %}
+            <a href="?page={{ page_obj_active_user.next_page_number }}">next</a>
+            <a href="?page={{ page_obj_active_user.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </span>
+    </div><br>
+
+     Individual User Posts
+    {% for p in page_obj_active_user %}
+      <div class="post_style">
+        <p id="userlink" class="user_page" 
+          style="font-size:25px; font-weight: bold;"> <a href="{% url 'index' p.user %}"  ">{{p.user}}</a> 
+        </p>
+     
+          {{p.content}}<br>
+          {{p.timestamp}}<br> 
+          Likes: {{p.likes}}<br>
+          TODO: Like button<br>
+          TODO: Edit Button<br>
+          TODO: Comment Button  
+          <br><br>
+      </div>
+    {% endfor %}   
+    
+    </div>
+  
+  -->
+
+    
+
+

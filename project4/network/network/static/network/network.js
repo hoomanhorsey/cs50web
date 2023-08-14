@@ -1,24 +1,21 @@
 // Event listeners to call functions, after page is loaded:
+
 document.addEventListener('DOMContentLoaded', function() {
-
-
-
-
- 
-
 
 // Functions
 
-
-
 // New Posts Function
+
+all_posts('default loading')
+
 function new_post(message) {
-  
   console.log("which tab: ", message)
   document.querySelector('#postform-view').style.display = 'block';
   document.querySelector('#all_post-view').style.display = 'none';
   document.querySelector('#follow-view').style.display = 'none';
   document.querySelector('#selected_user_view').style.display = 'none';
+  document.querySelector('#jav_selected_user_view').style.display = 'none';
+
 }
 
 // Following Posts Function
@@ -28,6 +25,8 @@ function following(message) {
   document.querySelector('#all_post-view').style.display = 'none';
   document.querySelector('#follow-view').style.display = 'block';
   document.querySelector('#selected_user_view').style.display = 'none';
+  document.querySelector('#jav_selected_user_view').style.display = 'none';
+
 }
 
 // User (Selected) Function
@@ -39,8 +38,23 @@ function selected_user(name) {
   document.querySelector('#all_post-view').style.display = 'none';
   document.querySelector('#follow-view').style.display = 'none';
   document.querySelector('#selected_user_view').style.display = 'block';
+  document.querySelector('#jav_selected_user_view').style.display = 'none';
+
   //}
 }
+
+function jav_selected_user(name){
+    console.log("dataset name: ", name);
+    //const selected_user = (name) => {
+    console.log("Foreach is being applied to each individual element! - Version 2")
+    document.querySelector('#postform-view').style.display = 'none';
+    document.querySelector('#all_post-view').style.display = 'none';
+    document.querySelector('#follow-view').style.display = 'none';
+    document.querySelector('#selected_user_view').style.display = 'none';
+    document.querySelector('#jav_selected_user_view').style.display = 'block';
+
+    //}
+  }
 
   // All Posts Function
   function all_posts(message) {
@@ -50,26 +64,41 @@ function selected_user(name) {
     document.querySelector('#follow-view').style.display = 'none';
     document.querySelector('#selected_user_view').style.display = 'none';
   }
-  // Navbar selection - display html 
-  // by default, load all_posts 
-  all_posts('default loading')
- 
-  document.querySelector('#all_posts').addEventListener('click', () => all_posts('all_posts'));
-  document.querySelector('#new_post').addEventListener('click', () => new_post('new_post'));
-  document.querySelector('#following').addEventListener('click', () => following('following'));
-  // User posts - display html
-  document.querySelectorAll('.user_pag').forEach(function(p) {
-  p.addEventListener('click', () => selected_user(p.dataset.name));
 
+// Navbar selection - display html 
+// by default, load all_posts 
+document.querySelector('#all_posts').addEventListener('click', () => all_posts('all_posts'));
+document.querySelector('#new_post').addEventListener('click', () => new_post('new_post'));
+document.querySelector('#following').addEventListener('click', () => following('following'));
+
+// User posts - display html
+document.querySelectorAll('.user_post').forEach(function(p) {
+  p.addEventListener('click', () => selected_user(p.dataset.name));
   });
 
-
-    //document.querySelector('#userlink').addEventListener('click', () => user('userlink'));
-
-
-
+// User posts - display html
+document.querySelectorAll('.jav_user_post').forEach(function(p) {
+    p.addEventListener('click', () => jav_selected_user(p.dataset.name));
+    });
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -88,9 +117,7 @@ function user(message) {
   document.querySelector('#user_view').style.display = 'block';
 }
 
-
 // Test function for 'user' javascript view, using classes to identify
-
 // Test function for 'user' javascript view
 function userclass(message) {
   console.log("which tab: ", message)
@@ -101,9 +128,6 @@ function userclass(message) {
   document.querySelector('#follow-view').style.display = 'none';
   document.querySelector('#user_view').style.display = 'block';
 }
-
-
-
 
 function testuserclass(message, dataname) {
   // This function is redundant and a bit of a mess, can be deleted.
@@ -121,8 +145,6 @@ function testuserclass(message, dataname) {
     document.querySelector('#follow-view').style.display = 'none';
     document.querySelector('#user_view').style.display = 'block';
 }
-
-
 
 
 

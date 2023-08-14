@@ -57,8 +57,8 @@
             <!-- <p id="userlink" class="user_pag" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
               <a href="#">{{p.user}}</a>
             </p> -->
-            <p id="userlink" class="user_pag" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
-              <a href="{% url 'index_user' p.user %}">{{p.user}}</a>
+            <p id="userlink" class="user_post" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
+              <a href="{% url 'index_selecteduser' p.user %}">{{p.user}}</a>
             </p>
             REF: FROM ALL POST VIEW
             {{p.content}}<br>
@@ -113,6 +113,62 @@
           style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
         </p>
           REF: FROM SELECTED USER VIEW
+          <br>
+          {{p.content}}<br>
+          {{p.timestamp}}<br> 
+          Likes: {{p.likes}}<br>
+          TODO: Like button<br>
+          TODO: Edit Button<br>
+          TODO: Comment Button  
+          <br><br>
+      </div>
+{% endfor %}   
+
+</div>
+
+
+
+<div id="jav_selected_user_view">
+
+    This is the 'jav_selected_user_view'
+          
+    <h2>This is the selected user: {{selected_user}}</h2><br>
+    <h2>This is the active user: {{active_user}}</h2><br>
+    <h2>This is the current user: {{current_user}}</h2><br>
+    
+    <!-- Followers/Following-->
+    <p class="post_style" >
+      <strong style="font-size:25px;">Followers:</strong> {{ selected_user.followers_of_user }}<br>
+      <strong style="font-size:25px;">Followed: </strong> {{ selected_user.followed_by_user }} <br>
+    </p>
+
+    <!-- pagination-->
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj_selected_user.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page_obj_selected_user.previous_page_number }}">previous</a>
+        {% endif %}
+
+      <span class="current">
+        Page {{ page_obj_selected_user.number }} of {{ page_obj_selected_user.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj_selected_user.has_next %}
+        <a href="?page={{ page_obj_selected_user.next_page_number }}">next</a>
+        <a href="?page={{ page_obj_selected_user.paginator.num_pages }}">last &raquo;</a>
+      {% endif %}
+      </span>
+    </div><br>
+
+    <!-- Individual selectedUser Posts-->
+    {% for p in page_obj_selected_user %}
+      <div class="post_style">
+        <p id="userlink" class="selected_user_page" 
+          style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
+        </p>
+          REF: FROM JAV SELECTED USER VIEW
+          <br>
           {{p.content}}<br>
           {{p.timestamp}}<br> 
           Likes: {{p.likes}}<br>
