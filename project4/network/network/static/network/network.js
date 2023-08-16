@@ -1,12 +1,16 @@
 // Event listeners to call functions, after page is loaded:
 
 document.addEventListener('DOMContentLoaded', function() {
+ 
+hide_all_posts('called hide_all_posts function - this may be redundant');
+all_posts("called all_posts function");
 
 // Functions
 
 // New Posts Function
 
-all_posts('default loading')
+//all_posts('default loading')
+
 
 function new_post(message) {
   console.log("which tab: ", message)
@@ -44,7 +48,7 @@ function selected_user(name) {
 }
 
 function jav_selected_user(name){
-    console.log("dataset name: ", name);
+    console.log("Extracted from the dataset, the name of the user is: ", name);
     //const selected_user = (name) => {
     console.log("Foreach is being applied to each individual element! - Version 2")
     document.querySelector('#postform-view').style.display = 'none';
@@ -52,6 +56,11 @@ function jav_selected_user(name){
     document.querySelector('#follow-view').style.display = 'none';
     document.querySelector('#selected_user_view').style.display = 'none';
     document.querySelector('#jav_selected_user_view').style.display = 'block';
+
+    // i have the dataset name of the user. I should be able to use this to call an API, using fetch, to extra the user info.
+    // 1. Create API in the view....
+    // 2. Call the API using 'fetch' and the 'username' found in the dataset
+    // 3. extract the data and then populate it into the website using document.querySelector.....+ string literals 
 
     //}
   }
@@ -64,6 +73,18 @@ function jav_selected_user(name){
     document.querySelector('#follow-view').style.display = 'none';
     document.querySelector('#selected_user_view').style.display = 'none';
   }
+
+// Possible redundant function here.
+function hide_all_posts() {
+  console.log("called hide all posts function");
+  document.querySelector('#postform-view').style.display = 'none';
+  document.querySelector('#all_post-view').style.display = 'none';
+  document.querySelector('#follow-view').style.display = 'none';
+  document.querySelector('#selected_user_view').style.display = 'none';
+  document.querySelector('#jav_selected_user_view').style.display = 'none';
+}
+
+
 
 // Navbar selection - display html 
 // by default, load all_posts 
