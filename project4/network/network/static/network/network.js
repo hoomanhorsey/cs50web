@@ -62,8 +62,21 @@ function jav_selected_user(name){
     // 2. Call the API using 'fetch' and the 'username' found in the dataset
     // 3. extract the data and then populate it into the website using document.querySelector.....+ string literals 
 
+    fetch('/user_api/'+`${name}`)
+    .then(response => response.json())
+    .then(posts => {
+        console.log(posts)
+        console.log("Jav Selected User function and the fetch API has been called");
+    }).catch((error) => {
+      console.log(error);
+    });
+
     //}
   }
+
+
+  }
+  
 
   // All Posts Function
   function all_posts(message) {
@@ -91,6 +104,12 @@ function hide_all_posts() {
 document.querySelector('#all_posts').addEventListener('click', () => all_posts('all_posts'));
 document.querySelector('#new_post').addEventListener('click', () => new_post('new_post'));
 document.querySelector('#following').addEventListener('click', () => following('following'));
+
+
+// User posts - display html
+document.querySelectorAll('.api_user_post').forEach(function(p) {
+  p.addEventListener('click', () => jav_selected_user(p.dataset.name));
+  });
 
 // User posts - display html
 document.querySelectorAll('.user_post').forEach(function(p) {

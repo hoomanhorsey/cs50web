@@ -1,10 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
 from django.core.paginator import Paginator
+
+from django.core.serializers import serialize
+
 
 from .models import User, Post, Follower, Like
 
@@ -100,10 +103,29 @@ def index(request, request_name=None):
             "current_user" : current_user, })
         
 
+def user_api(request, request_name=None):
+    #insert API here, that returns the posts
+    # get active user
+    print("This user_api has been called!")
+    active_user = User.objects.get(username=request_name)
+    print("active user: ", active_user)
 
+    # get posts of active user
+    active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
+    print("active user posts: ", active_user_posts)
+    
+    serial_posts = serialize('json', active_user_posts)
+    print("Queryset has been seriazlied")
 
+    return JsonResponse(serial_posts, safe=False)
+        
+
+    # How to return the Queryset as a JsonResponse?   
+    return JsonResponse([active_user_posts.serialize() for post in active_user_posts], safe=False)
 
 def index_selecteduser(request, request_name=None):
+
+
     print("We have traversed the index_selected user function, even if the html doesn't stay with the view that is rendered")
     # Checking for name argument - #print test, can delete
     if (request_name == None): 
