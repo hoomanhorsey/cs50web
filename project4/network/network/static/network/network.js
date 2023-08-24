@@ -11,6 +11,14 @@ all_posts("called all_posts function");
 
 //all_posts('default loading')
 
+  // All Posts Function
+  function all_posts(message) {
+    console.log("All Posts - which tab: ", message)
+    document.querySelector('#postform-view').style.display = 'none';
+    document.querySelector('#all_post-view').style.display = 'block';
+    document.querySelector('#follow-view').style.display = 'none';
+    document.querySelector('#selected_user_view').style.display = 'none';
+  }
 
 function new_post(message) {
   console.log("which tab: ", message)
@@ -18,7 +26,7 @@ function new_post(message) {
   document.querySelector('#all_post-view').style.display = 'none';
   document.querySelector('#follow-view').style.display = 'none';
   document.querySelector('#selected_user_view').style.display = 'none';
-  document.querySelector('#jav_selected_user_view').style.display = 'none';
+  document.querySelector('#api_user_view').style.display = 'none';
 
 }
 
@@ -29,9 +37,64 @@ function following(message) {
   document.querySelector('#all_post-view').style.display = 'none';
   document.querySelector('#follow-view').style.display = 'block';
   document.querySelector('#selected_user_view').style.display = 'none';
-  document.querySelector('#jav_selected_user_view').style.display = 'none';
+  document.querySelector('#api_user_view').style.display = 'none';
 
 }
+
+
+function user_api_function(name){
+    console.log("Extracted from the dataset, the name of the user is: ", name);
+    //const selected_user = (name) => {
+    console.log("Foreach is being applied to each individual element! - Version 2")
+    document.querySelector('#postform-view').style.display = 'none';
+    document.querySelector('#all_post-view').style.display = 'none';
+    document.querySelector('#follow-view').style.display = 'none';
+    document.querySelector('#selected_user_view').style.display = 'none';
+    document.querySelector('#api_user_view').style.display = 'block';
+
+    // i have the dataset name of the user. I should be able to use this to call an API, using fetch, to extra the user info.
+    // 1. Create API in the view....
+    // 2. Call the API using 'fetch' and the 'username' found in the dataset
+    // 3. extract the data and then populate it into the website using document.querySelector.....+ string literals 
+
+    fetch('/user_api/'+`${name}`)
+    .then(response => response.json())
+    .then(posts => {
+      posts.forEach(display_user_posts);
+      
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    function display_user_posts(posts) {
+      const post_content = document.createElement('p');
+      model = posts.model;
+      console.log("model: ", model)
+      post_content.innerHTML = model;
+
+
+      document.querySelector('#api_user_test_div').append(post_content);
+      
+    }
+    
+  
+
+
+  }
+  
+
+
+
+// Possible redundant function here.
+function hide_all_posts() {
+  console.log("called hide all posts function");
+  document.querySelector('#postform-view').style.display = 'none';
+  document.querySelector('#all_post-view').style.display = 'none';
+  document.querySelector('#follow-view').style.display = 'none';
+  document.querySelector('#selected_user_view').style.display = 'none';
+  document.querySelector('#api_user_view').style.display = 'none';
+}
+
 
 // User (Selected) Function
 function selected_user(name) {
@@ -42,62 +105,10 @@ function selected_user(name) {
   document.querySelector('#all_post-view').style.display = 'none';
   document.querySelector('#follow-view').style.display = 'none';
   document.querySelector('#selected_user_view').style.display = 'block';
-  document.querySelector('#jav_selected_user_view').style.display = 'none';
+  document.querySelector('#api_user_view').style.display = 'none';
 
   //}
 }
-
-function jav_selected_user(name){
-    console.log("Extracted from the dataset, the name of the user is: ", name);
-    //const selected_user = (name) => {
-    console.log("Foreach is being applied to each individual element! - Version 2")
-    document.querySelector('#postform-view').style.display = 'none';
-    document.querySelector('#all_post-view').style.display = 'none';
-    document.querySelector('#follow-view').style.display = 'none';
-    document.querySelector('#selected_user_view').style.display = 'none';
-    document.querySelector('#jav_selected_user_view').style.display = 'block';
-
-    // i have the dataset name of the user. I should be able to use this to call an API, using fetch, to extra the user info.
-    // 1. Create API in the view....
-    // 2. Call the API using 'fetch' and the 'username' found in the dataset
-    // 3. extract the data and then populate it into the website using document.querySelector.....+ string literals 
-
-    fetch('/user_api/'+`${name}`)
-    .then(response => response.json())
-    .then(posts => {
-        console.log(posts)
-        console.log("Jav Selected User function and the fetch API has been called");
-    }).catch((error) => {
-      console.log(error);
-    });
-
-    //}
-  }
-
-
-  }
-  
-
-  // All Posts Function
-  function all_posts(message) {
-    console.log("All Posts - which tab: ", message)
-    document.querySelector('#postform-view').style.display = 'none';
-    document.querySelector('#all_post-view').style.display = 'block';
-    document.querySelector('#follow-view').style.display = 'none';
-    document.querySelector('#selected_user_view').style.display = 'none';
-  }
-
-// Possible redundant function here.
-function hide_all_posts() {
-  console.log("called hide all posts function");
-  document.querySelector('#postform-view').style.display = 'none';
-  document.querySelector('#all_post-view').style.display = 'none';
-  document.querySelector('#follow-view').style.display = 'none';
-  document.querySelector('#selected_user_view').style.display = 'none';
-  document.querySelector('#jav_selected_user_view').style.display = 'none';
-}
-
-
 
 // Navbar selection - display html 
 // by default, load all_posts 
@@ -105,10 +116,9 @@ document.querySelector('#all_posts').addEventListener('click', () => all_posts('
 document.querySelector('#new_post').addEventListener('click', () => new_post('new_post'));
 document.querySelector('#following').addEventListener('click', () => following('following'));
 
-
 // User posts - display html
 document.querySelectorAll('.api_user_post').forEach(function(p) {
-  p.addEventListener('click', () => jav_selected_user(p.dataset.name));
+  p.addEventListener('click', () => user_api_function(p.dataset.name));
   });
 
 // User posts - display html
@@ -118,7 +128,7 @@ document.querySelectorAll('.user_post').forEach(function(p) {
 
 // User posts - display html
 document.querySelectorAll('.jav_user_post').forEach(function(p) {
-    p.addEventListener('click', () => jav_selected_user(p.dataset.name));
+    p.addEventListener('click', () => api_user_function(p.dataset.name));
     });
 
 });

@@ -128,9 +128,9 @@
 
 
 
-<div id="jav_selected_user_view">
+<div id="api_user_view">
 
-    This is the 'jav_selected_user_view'
+    This is the 'api_user_view'
           
     <h2>This is the selected user: {{selected_user}}</h2><br>
     <h2>This is the active user: {{active_user}}</h2><br>
@@ -141,6 +141,14 @@
       <strong style="font-size:25px;">Followers:</strong> {{ selected_user.followers_of_user }}<br>
       <strong style="font-size:25px;">Followed: </strong> {{ selected_user.followed_by_user }} <br>
     </p>
+
+    <!-- Test div-->
+
+    <div class="api_user_test_div" id="api_user_test_div" >
+      <!-- using both class and div because I"m not sure which one is better, but once it works delete one-->
+
+
+    </div>
 
     <!-- pagination-->
     <div class="pagination">
@@ -167,7 +175,7 @@
         <p id="userlink" class="selected_user_page" 
           style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
         </p>
-          REF: FROM JAV SELECTED USER VIEW
+          REF: FROM API USER USER VIEW
           <br>
           {{p.content}}<br>
           {{p.timestamp}}<br> 

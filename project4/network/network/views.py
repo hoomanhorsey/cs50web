@@ -125,7 +125,6 @@ def user_api(request, request_name=None):
 
 def index_selecteduser(request, request_name=None):
 
-
     print("We have traversed the index_selected user function, even if the html doesn't stay with the view that is rendered")
     # Checking for name argument - #print test, can delete
     if (request_name == None): 
@@ -201,45 +200,6 @@ def index_selecteduser(request, request_name=None):
         {"page_obj" : page_obj,
         "current_user" : current_user, })        
 
-#this function is no longer really needed, as it is a one page app
-def index_user(request, name):
-    print("Printing checks when route is directed to user_index:")
-    print("name", name)
-    print(type(name))
-       
-    active_user = User.objects.get(username=name)
-   
-    print("id", active_user.id)  
-    print("active user:", active_user)
-
-    active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
-
-    paginator_active_user = Paginator(active_user_posts, 2)
-    page_number = request.GET.get('page')
-    page_obj_active_user = paginator_active_user.get_page(page_number)
-
-    return render(request, "network/user.html",{
-                      "page_obj_active_user": page_obj_active_user,
-                      "active_user": active_user
-                  })
-
-def demo_user(request, request_name=None):
-    print(request, request_name)
-
-    active_user = User.objects.get(username=request_name)
-
-    print("active_user: ", active_user)
-
-    active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
-
-    paginator_active_user = Paginator(active_user_posts, 2)
-    page_number = request.GET.get('page')
-    page_obj_active_user = paginator_active_user.get_page(page_number)
-
-    return render(request, "network/demo_user.html",{
-                      "page_obj_active_user": page_obj_active_user,
-                      "active_user": active_user
-                  })
     
 
 def login_view(request):
@@ -292,3 +252,4 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+

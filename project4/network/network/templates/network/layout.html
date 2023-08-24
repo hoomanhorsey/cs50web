@@ -9,7 +9,6 @@
 
         <link  href="{% static 'network/styles.css' %}" rel="stylesheet">   
 
-     
     </head>
 
     <body>
@@ -26,20 +25,7 @@
 
                 <li class="api_user_post" class="nav-item" data-name="{{user.username}}">
                   <a class="nav-link" href="#"><strong>api - {{ user.username }}</strong></a>
-                </li>
-
-                  <li class="user_post" class="nav-item" data-name="{{user.username}}">
-                    <a class="nav-link" href="{% url 'index_selecteduser' user.username %}"><strong>{{ user.username }}</strong></a>
-                  </li>
-                  
-                  <li class="user_demo" class="nav-item" data-name="{{user.username}}">
-                    <a class="nav-link" href="{% url 'demo_user' user.username %}"><strong>demo: {{ user.username }}</strong></a>
-                  </li>    
-
-                  <li class="jav_user_post" class="nav-item" data-name="{{user.username}}">
-                    <a class="nav-link" href="{% url 'index_selecteduser' user.username %}"><strong>javascript: {{ user.username }}</strong></a>
-                  </li>
-                  
+                </li>                  
 
                 {% endif %}
                 
@@ -80,4 +66,12 @@
 </html>
 
 
+<!--
+<li class="user_post" class="nav-item" data-name="{{user.username}}">
+  <a class="nav-link" href="{% url 'index_selecteduser' user.username %}"><strong>{{ user.username }}</strong></a>
+</li>
 
+<li class="jav_user_post" class="nav-item" data-name="{{user.username}}">
+  <a class="nav-link" href="{% url 'index_selecteduser' user.username %}"><strong>javascript: {{ user.username }}</strong></a>
+</li>
+-->
