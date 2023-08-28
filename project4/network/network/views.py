@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 
 from django.core.serializers import serialize
 
+
 from .models import User, Post, Follower, Like
 
 
@@ -20,14 +21,14 @@ def index(request, request_name=None):
         print("Name from request: ", request_name)
 
     # extracting username from request
-    current_user = request.user
+    logged_in_user = request.user
 
     # Post route, when posting a new 'post'.
     if request.method == "POST":
         # Extracting content from post request
         post_content = request.POST["post_content"]
         # Renderation post and user into form for table
-        post = Post(content=post_content, user=current_user)
+        post = Post(content=post_content, user=logged_in_user)
         # Saving new post
         post.save()   
         # Redirect to url associated with route named 'index' 
@@ -44,7 +45,7 @@ def index(request, request_name=None):
             print("Name = None") #print test, can delete
 
             # get active user
-            active_user = User.objects.get(username=current_user)
+            active_user = User.objects.get(username=logged_in_user)
                      
             # get posts of active user
             active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
@@ -62,8 +63,8 @@ def index(request, request_name=None):
             page_obj = paginator.get_page(page_number)   
 
             return render(request, "network/index.html",
-            { "page_obj" : page_obj,
-            "current_user" : current_user, #get rid of if user has it's own path
+            {"page_obj" : page_obj,
+            "logged_in_user" : logged_in_user, #get rid of if user has it's own path
             "page_obj_active_user": page_obj_active_user,
             "active_user": active_user, 
                 })
@@ -83,7 +84,7 @@ def index(request, request_name=None):
             page_obj_selected_user = paginator_selected_user.get_page(page_number)
             
             return render(request, "network/index.html",
-            {"current_user" : current_user, #get rid of if user has it's own path           
+            {"logged_in_user" : logged_in_user, #get rid of if user has it's own path           
             "page_obj_selected_user": page_obj_selected_user,
             "selected_user": selected_user})
 
@@ -99,7 +100,7 @@ def index(request, request_name=None):
       
           return render(request, "network/index.html",
             {"page_obj" : page_obj,
-            "current_user" : current_user, })
+            "logged_in_user" : logged_in_user, })
         
 
 def user_api(request, request_name=None):
@@ -112,22 +113,18 @@ def user_api(request, request_name=None):
     # get posts of active user
     active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
     print("active user posts: ", active_user_posts)
-
+    
     serial_posts = serialize('json', active_user_posts)
     print("Queryset has been seriazlied")
 
-    return HttpResponse(serial_posts, content_type='application/json')
 
-    #return JsonResponse(active_user_posts, safe=False)
+    return HttpResponse(serial_posts, content_type='application/json')
+    #return JsonResponse(serial_posts, safe=False)
         
 
     # How to return the Queryset as a JsonResponse?   
     return JsonResponse([active_user_posts.serialize() for post in active_user_posts], safe=False)
 
-
-
-
-#I'm not sure that this view is rqeuired any more.....
 def index_selecteduser(request, request_name=None):
 
     print("We have traversed the index_selected user function, even if the html doesn't stay with the view that is rendered")
@@ -138,7 +135,7 @@ def index_selecteduser(request, request_name=None):
         print("Name from request: ", request_name)
 
     # extracting username from request
-    current_user = request.user
+    logged_in_user = request.user
     
     # Path if user is logged in:
     if request.user.is_authenticated:
@@ -148,7 +145,7 @@ def index_selecteduser(request, request_name=None):
             print("Name = None") #print test, can delete
 
             # get active user
-            active_user = User.objects.get(username=current_user)
+            active_user = User.objects.get(username=logged_in_user)
                         
             # get posts of active user
             active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
@@ -167,7 +164,7 @@ def index_selecteduser(request, request_name=None):
 
             return render(request, "network/index_user.html",
             { "page_obj" : page_obj,
-            "current_user" : current_user, #get rid of if user has it's own path
+            "logged_in_user" : logged_in_user, #get rid of if user has it's own path
             "page_obj_active_user": page_obj_active_user,
             "active_user": active_user, 
                 })
@@ -187,7 +184,7 @@ def index_selecteduser(request, request_name=None):
             page_obj_selected_user = paginator_selected_user.get_page(page_number)
             
             return render(request, "network/index.html",
-            {"current_user" : current_user, #get rid of if user has it's own path           
+            {"logged_in_user" : logged_in_user, #get rid of if user has it's own path           
             "page_obj_selected_user": page_obj_selected_user,
             "selected_user": selected_user})
 
@@ -203,7 +200,7 @@ def index_selecteduser(request, request_name=None):
     
         return render(request, "network/index.html",
         {"page_obj" : page_obj,
-        "current_user" : current_user, })        
+        "logged_in_user" : logged_in_user, })        
 
     
 
