@@ -68,20 +68,11 @@ function user_api_function(name){
     .then(posts => {
       console.log(posts[0].fields['content'])
       posts.forEach(display_user_posts);
-      console.log("Posting posts object - seems to be a string at the moment", posts);
     })
     .catch(error => {
       console.error('Error fetching data:', error);
     });
 
-    fetch('/user_api/'+`${name}`)
-    .then(response => response.json())
-    .then(posts => {
-
-      
-    }).catch((error) => {
-      console.log(error);
-    });
 
     function display_user_posts(posts) {
       console.log("post in display_user_posts", posts)
