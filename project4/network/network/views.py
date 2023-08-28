@@ -8,7 +8,6 @@ from django.core.paginator import Paginator
 
 from django.core.serializers import serialize
 
-
 from .models import User, Post, Follower, Like
 
 
@@ -113,16 +112,22 @@ def user_api(request, request_name=None):
     # get posts of active user
     active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
     print("active user posts: ", active_user_posts)
-    
+
     serial_posts = serialize('json', active_user_posts)
     print("Queryset has been seriazlied")
 
-    return JsonResponse(serial_posts, safe=False)
+    return HttpResponse(serial_posts, content_type='application/json')
+
+    #return JsonResponse(active_user_posts, safe=False)
         
 
     # How to return the Queryset as a JsonResponse?   
     return JsonResponse([active_user_posts.serialize() for post in active_user_posts], safe=False)
 
+
+
+
+#I'm not sure that this view is rqeuired any more.....
 def index_selecteduser(request, request_name=None):
 
     print("We have traversed the index_selected user function, even if the html doesn't stay with the view that is rendered")

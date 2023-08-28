@@ -57,21 +57,41 @@ function user_api_function(name){
     // 2. Call the API using 'fetch' and the 'username' found in the dataset
     // 3. extract the data and then populate it into the website using document.querySelector.....+ string literals 
 
+    fetch('/user_api/' + `${name}`)
+    .then(response => {
+      console.log(response); // Log the response object
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(posts => {
+      console.log(posts[0].fields['content'])
+      posts.forEach(display_user_posts);
+      console.log("Posting posts object - seems to be a string at the moment", posts);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+
     fetch('/user_api/'+`${name}`)
     .then(response => response.json())
     .then(posts => {
-      posts.forEach(display_user_posts);
+
       
     }).catch((error) => {
       console.log(error);
     });
 
     function display_user_posts(posts) {
+      console.log("post in display_user_posts", posts)
       const post_content = document.createElement('p');
-      model = posts.model;
-      console.log("model: ", model)
-      post_content.innerHTML = model;
 
+      post_content.innerHTML = 
+      "<div class='post_style'> <p id='userlink' class='selected_user_page' style='font-size:25px; font-weight: bold;'> <a href='#'>" + `${posts.fields.user}` + "</a> </p>" +
+        "Post: " + `${posts.fields.content}` + 
+        "<br> User" + `${posts.fields.user}` +
+        "<br> Timestamp" + `${posts.fields.timestamp}`+ "</div>";
 
       document.querySelector('#api_user_test_div').append(post_content);
       
@@ -215,3 +235,5 @@ function testuserclass(message, dataname) {
  // console.log(event);
  // console.log(p);
 //}
+
+
