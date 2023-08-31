@@ -18,8 +18,53 @@ all_posts("called all_posts function");
     document.querySelector('#all_post-view').style.display = 'block';
     document.querySelector('#follow-view').style.display = 'none';
     document.querySelector('#selected_user_view').style.display = 'none';
+    document.querySelector('#follower_view').style.display = 'none';
   }
 
+   // All Posts Java Function
+  function all_posts_java(message) {
+    console.log("All Posts - which tab: ", message)
+    document.querySelector('#postform-view').style.display = 'none';
+    document.querySelector('#all_post-view').style.display = 'none';
+    document.querySelector('#all_post_java-view').style.display = 'block';
+    document.querySelector('#follow-view').style.display = 'none';
+    document.querySelector('#selected_user_view').style.display = 'none';
+    document.querySelector('#follower_view').style.display = 'none';
+
+    fetch('/all_user_api/')
+    .then(response => {
+      console.log(response); // Log the response object
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(posts => {
+      console.log(posts[0].fields['content'])
+      posts.forEach(display_all_user_posts);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+
+ 
+    function display_all_user_posts(posts) {
+      console.log("post in display_user_posts", posts)
+      console.log(posts)
+      const post_content = document.createElement('p');
+
+      post_content.innerHTML = 
+      "<div class='post_style'> <p id='userlink' class='selected_user_page' style='font-size:25px; font-weight: bold;'> <a href='#'>"+`${posts.fields.user}`  + "</a> </p>" +
+        "From api_user_view via javascript function <br> Post: " + `${posts.fields.content}` + 
+        "<br> Timestamp: " + `${posts.fields.timestamp}`+  
+        "<br> Likes: {{p.likes}}<br> <button> Like </button> TODO: <br>  <button> Edit </button> TODO <br>   <button> Comment </button> TODO <br> test div - referencing a context in javascript doesn't work. It would seem to need to come from the view and out put to the template {{ active_user }}</div>  <br>     <div>  </div>";
+
+      document.querySelector('#all_posts_java_sep_post').append(post_content);
+      
+    }
+    
+    }
+    
 function new_post(message) {
   console.log("which tab: ", message)
   document.querySelector('#postform-view').style.display = 'block';
@@ -27,6 +72,8 @@ function new_post(message) {
   document.querySelector('#follow-view').style.display = 'none';
   document.querySelector('#selected_user_view').style.display = 'none';
   document.querySelector('#api_user_view').style.display = 'none';
+  document.querySelector('#follower_view').style.display = 'none';
+
 
 }
 
@@ -38,19 +85,21 @@ function following(message) {
   document.querySelector('#follow-view').style.display = 'block';
   document.querySelector('#selected_user_view').style.display = 'none';
   document.querySelector('#api_user_view').style.display = 'none';
-
+  document.querySelector('#follower_view').style.display = 'none';
 }
 
 
 function user_api_function(name){
     console.log("Extracted from the dataset, the name of the user is: ", name);
     //const selected_user = (name) => {
-    console.log("Foreach is being applied to each individual element! - Version 2")
+    console.log("iForeach is being applied to each individual element! - Version 2")
     document.querySelector('#postform-view').style.display = 'none';
     document.querySelector('#all_post-view').style.display = 'none';
     document.querySelector('#follow-view').style.display = 'none';
     document.querySelector('#selected_user_view').style.display = 'none';
+    document.querySelector('#follower_view').style.display = 'block';
     document.querySelector('#api_user_view').style.display = 'block';
+
 
     // i have the dataset name of the user. I should be able to use this to call an API, using fetch, to extra the user info.
     // 1. Create API in the view....
@@ -79,10 +128,10 @@ function user_api_function(name){
       const post_content = document.createElement('p');
 
       post_content.innerHTML = 
-      "<div class='post_style'> <p id='userlink' class='selected_user_page' style='font-size:25px; font-weight: bold;'> <a href='#'>" + `${posts.fields.user}` + "</a> </p>" +
-        "Post: " + `${posts.fields.content}` + 
-        "<br> User" + `${posts.fields.user}` +
-        "<br> Timestamp" + `${posts.fields.timestamp}`+ "</div>";
+      "<div class='post_style'> <p id='userlink' class='selected_user_page' style='font-size:25px; font-weight: bold;'> <a href='#'>" + `${name}` + "</a> </p>" +
+        "From api_user_view via javascript function <br> Post: " + `${posts.fields.content}` + 
+        "<br> Timestamp: " + `${posts.fields.timestamp}`+  
+        "<br> Likes: {{p.likes}}<br> TODO: Like button<br>  TODO: Edit Button<br>   TODO: Comment Button <br> test div - referencing a context in javascript doesn't work. It would seem to need to come from the view and out put to the template {{ active_user }}</div>  <br>     <div>  </div>";
 
       document.querySelector('#api_user_test_div').append(post_content);
       
@@ -104,6 +153,8 @@ function hide_all_posts() {
   document.querySelector('#follow-view').style.display = 'none';
   document.querySelector('#selected_user_view').style.display = 'none';
   document.querySelector('#api_user_view').style.display = 'none';
+  document.querySelector('#follower_view').style.display = 'none';
+
 }
 
 
@@ -111,12 +162,14 @@ function hide_all_posts() {
 function selected_user(name) {
   console.log("dataset name: ", name);
   //const selected_user = (name) => {
-  console.log("Foreach is being applied to each individual element! - Version 2")
+  console.log("(Selected User) Foreach is being applied to each individual element! - Version 2")
   document.querySelector('#postform-view').style.display = 'none';
   document.querySelector('#all_post-view').style.display = 'none';
   document.querySelector('#follow-view').style.display = 'none';
   document.querySelector('#selected_user_view').style.display = 'block';
   document.querySelector('#api_user_view').style.display = 'none';
+  document.querySelector('#follower_view').style.display = 'none';
+
 
   //}
 }
@@ -124,6 +177,7 @@ function selected_user(name) {
 // Navbar selection - display html 
 // by default, load all_posts 
 document.querySelector('#all_posts').addEventListener('click', () => all_posts('all_posts'));
+document.querySelector('#all_posts_java').addEventListener('click', () => all_posts_java('all_posts_java'));
 document.querySelector('#new_post').addEventListener('click', () => new_post('new_post'));
 document.querySelector('#following').addEventListener('click', () => following('following'));
 
@@ -132,7 +186,8 @@ document.querySelectorAll('.api_user_post').forEach(function(p) {
   p.addEventListener('click', () => user_api_function(p.dataset.name));
   });
 
-// User posts - display html
+// I think this function is now redundant
+//User posts - display html -
 document.querySelectorAll('.user_post').forEach(function(p) {
   p.addEventListener('click', () => selected_user(p.dataset.name));
   });

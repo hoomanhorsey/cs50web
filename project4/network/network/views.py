@@ -20,15 +20,12 @@ def index(request, request_name=None):
     else:
         print("Name from request: ", request_name)
 
-    # extracting username from request
-    logged_in_user = request.user
-
     # Post route, when posting a new 'post'.
     if request.method == "POST":
         # Extracting content from post request
         post_content = request.POST["post_content"]
         # Renderation post and user into form for table
-        post = Post(content=post_content, user=logged_in_user)
+        post = Post(content=post_content, user=request.user)
         # Saving new post
         post.save()   
         # Redirect to url associated with route named 'index' 
@@ -45,7 +42,7 @@ def index(request, request_name=None):
             print("Name = None") #print test, can delete
 
             # get active user
-            active_user = User.objects.get(username=logged_in_user)
+            active_user = User.objects.get(username=request.user)
                      
             # get posts of active user
             active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
@@ -64,10 +61,8 @@ def index(request, request_name=None):
 
             return render(request, "network/index.html",
             {"page_obj" : page_obj,
-            "logged_in_user" : logged_in_user, #get rid of if user has it's own path
             "page_obj_active_user": page_obj_active_user,
-            "active_user": active_user, 
-                })
+            "active_user": active_user})
 
           # Path for selected user
           else:
@@ -83,9 +78,8 @@ def index(request, request_name=None):
             page_number = request.GET.get('page')
             page_obj_selected_user = paginator_selected_user.get_page(page_number)
             
-            return render(request, "network/index.html",
-            {"logged_in_user" : logged_in_user, #get rid of if user has it's own path           
-            "page_obj_selected_user": page_obj_selected_user,
+            return render(request, "network/index.html",   
+            {"page_obj_selected_user": page_obj_selected_user,
             "selected_user": selected_user})
 
         # if user is not authenticated, i.e if no-one logged in
@@ -99,14 +93,36 @@ def index(request, request_name=None):
           page_obj = paginator.get_page(page_number)   
       
           return render(request, "network/index.html",
-            {"page_obj" : page_obj,
-            "logged_in_user" : logged_in_user, })
+            {"page_obj": page_obj})
         
+def all_user_api(request):
+     #insert API here, that returns the posts
+    # get active user
+    print("The all_user_api has been called!")
+    
+    # get posts of active user
+    
+    all_user_posts = Post.objects.select_related().order_by("-timestamp")
+    print("all user posts ", all_user_posts)
+    
+
+    # Note: accessing the related object 'user' of the 'post object' by using dot notation
+    # But how do we include the user in the json?
+    for p in all_user_posts:
+        print(p.user)
+    
+    serial_posts = serialize('json', all_user_posts)
+    print(serial_posts)
+    print("Queryset has been seriazlied")
+    
+    
+    return HttpResponse(serial_posts, content_type='application/json')
+    #return JsonResponse(serial_posts, safe=False)
 
 def user_api(request, request_name=None):
     #insert API here, that returns the posts
     # get active user
-    print("This user_api has been called!")
+    print("The user_api has been called!")
     active_user = User.objects.get(username=request_name)
     print("active user: ", active_user)
 
@@ -125,6 +141,7 @@ def user_api(request, request_name=None):
     # How to return the Queryset as a JsonResponse?   
     return JsonResponse([active_user_posts.serialize() for post in active_user_posts], safe=False)
 
+"""
 def index_selecteduser(request, request_name=None):
 
     print("We have traversed the index_selected user function, even if the html doesn't stay with the view that is rendered")
@@ -133,10 +150,7 @@ def index_selecteduser(request, request_name=None):
         print("Name = None")  
     else:
         print("Name from request: ", request_name)
-
-    # extracting username from request
-    logged_in_user = request.user
-    
+   
     # Path if user is logged in:
     if request.user.is_authenticated:
         
@@ -144,8 +158,8 @@ def index_selecteduser(request, request_name=None):
         if (request_name == None): 
             print("Name = None") #print test, can delete
 
-            # get active user
-            active_user = User.objects.get(username=logged_in_user)
+            # get active user from request
+            active_user = User.objects.get(username=request.user)
                         
             # get posts of active user
             active_user_posts = Post.objects.filter(user=active_user.id).order_by("-timestamp")
@@ -164,10 +178,8 @@ def index_selecteduser(request, request_name=None):
 
             return render(request, "network/index_user.html",
             { "page_obj" : page_obj,
-            "logged_in_user" : logged_in_user, #get rid of if user has it's own path
             "page_obj_active_user": page_obj_active_user,
-            "active_user": active_user, 
-                })
+            "active_user": active_user })
 
         # Path for selected user
         else:
@@ -183,9 +195,8 @@ def index_selecteduser(request, request_name=None):
             page_number = request.GET.get('page')
             page_obj_selected_user = paginator_selected_user.get_page(page_number)
             
-            return render(request, "network/index.html",
-            {"logged_in_user" : logged_in_user, #get rid of if user has it's own path           
-            "page_obj_selected_user": page_obj_selected_user,
+            return render(request, "network/index.html",               
+            {"page_obj_selected_user": page_obj_selected_user,
             "selected_user": selected_user})
 
         # if user is not authenticated, i.e if no-one logged in
@@ -199,11 +210,9 @@ def index_selecteduser(request, request_name=None):
         page_obj = paginator.get_page(page_number)   
     
         return render(request, "network/index.html",
-        {"page_obj" : page_obj,
-        "logged_in_user" : logged_in_user, })        
+        {"page_obj" : page_obj})        
 
-    
-
+    """
 def login_view(request):
     if request.method == "POST":
 

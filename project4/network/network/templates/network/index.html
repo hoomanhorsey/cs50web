@@ -26,6 +26,8 @@
 
     {% endif %}
 
+
+
     <!-- All Posts View-->
     <div id="all_post-view">
 
@@ -57,10 +59,10 @@
             <!-- <p id="userlink" class="user_pag" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
               <a href="#">{{p.user}}</a>
             </p> -->
-            <p id="userlink" class="user_post" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
-              <a href="{% url 'index_selecteduser' p.user %}">{{p.user}}</a>
+            <p class="api_user_post" name="user_name" data-name="{{p.user}}" style="font-size:25px; font-weight: bold ;">
+              <a href="#">{{p.user}}</a>
             </p>
-            REF: FROM ALL POST VIEW
+            REF: FROM ALL POST VIEW<br>
             {{p.content}}<br>
             {{p.timestamp}}<br> 
             Likes: {{p.likes}}<br>
@@ -71,6 +73,18 @@
           </div>
         {% endfor %}
     </div>
+
+    <!-- All Posts View-->
+    <div id="all_post_java-view">
+      <h3 style="font-size: 35px";><strong>All Posts Java</strong></h3>
+      Texts
+
+      <div id="all_posts_java_sep_post">
+
+      </div>
+    </div>
+
+
 
     <!-- selected User View-->
     <div id="selected_user_view">
@@ -109,8 +123,8 @@
     <!-- Individual selectedUser Posts-->
     {% for p in page_obj_selected_user %}
       <div class="post_style">
-        <p id="userlink" class="selected_user_page" 
-          style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
+        <p id="api_user_post" class="selected_user_page" 
+        data-name="{{p.user}}" style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
         </p>
           REF: FROM SELECTED USER VIEW
           <br>
@@ -126,7 +140,14 @@
 
 </div>
 
-
+<div id="follower_view">
+   <!-- Followers/Following--> 
+   <p class="post_style" >
+    Followers is now a separate standalone view.  It needs to be hidden or revealed via javascript <br>
+    <strong style="font-size:25px;">Followers:</strong> {{ user.followers_of_user }}<br>
+    <strong style="font-size:25px;">Followed: </strong> {{ user.followed_by_user }} <br>
+  </p>
+</div>
 
 <div id="api_user_view">
 
@@ -134,17 +155,17 @@
           
     <h2>This is the selected user: {{selected_user}}</h2><br>
     <h2>This is the active user: {{active_user}}</h2><br>
-    <h2>This is the logged_in user: {{logged_in_user}}</h2><br>
     
-    <!-- Followers/Following-->
+    <!-- Followers/Following -- now deprecated by stand alonve view
     <p class="post_style" >
       <strong style="font-size:25px;">Followers:</strong> {{ selected_user.followers_of_user }}<br>
       <strong style="font-size:25px;">Followed: </strong> {{ selected_user.followed_by_user }} <br>
     </p>
+    -->
 
     <!-- Test div-->
 
-    <div class="api_user_test_div" id="api_user_test_div" >
+    <div  id="api_user_test_div" >
       <!-- using both class and div because I"m not sure which one is better, but once it works delete one-->
 
 
@@ -169,11 +190,11 @@
       </span>
     </div><br>
 
-    <!-- Individual selectedUser Posts-->
+    <!-- Individual selectedUser Posts  // I think this is now redundant as it is rendered in javascript now
     {% for p in page_obj_selected_user %}
       <div class="post_style">
-        <p id="userlink" class="selected_user_page" 
-          style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
+        <p id="api_user_post" class="selected_user_page" 
+        data-name="{{p.user}}" style="font-size:25px; font-weight: bold;"> <a href="#">{{p.user}}</a> 
         </p>
           REF: FROM API USER USER VIEW
           <br>
@@ -185,7 +206,8 @@
           TODO: Comment Button  
           <br><br>
       </div>
-{% endfor %}   
+{% endfor %}  
+--> 
 
 </div>
 

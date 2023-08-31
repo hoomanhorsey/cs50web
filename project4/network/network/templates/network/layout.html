@@ -21,6 +21,7 @@
             <div class="testclass">
               <ul class="navbar-nav mr-auto">
                 
+                <!-- NOTE, user object is automatically available in this template context due to Django's default authentication system-->
                 {% if user.is_authenticated %}
 
                 <li class="api_user_post" class="nav-item" data-name="{{user.username}}">
@@ -31,6 +32,9 @@
                 
                   <li id="all_posts" class="nav-item">
                     <a class="nav-link" href="#">All Posts</a>
+                  </li>
+                  <li id="all_posts_java" class="nav-item">
+                    <a class="nav-link" href="#">All Posts Java</a>
                   </li>
                 
                 {% if user.is_authenticated %}
@@ -65,13 +69,3 @@
     </body>
 </html>
 
-
-<!--
-<li class="user_post" class="nav-item" data-name="{{user.username}}">
-  <a class="nav-link" href="{% url 'index_selecteduser' user.username %}"><strong>{{ user.username }}</strong></a>
-</li>
-
-<li class="jav_user_post" class="nav-item" data-name="{{user.username}}">
-  <a class="nav-link" href="{% url 'index_selecteduser' user.username %}"><strong>javascript: {{ user.username }}</strong></a>
-</li>
--->
